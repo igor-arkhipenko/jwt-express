@@ -1,0 +1,23 @@
+{
+  "name": "jwt-express",
+  "version": "1.0.0",
+  "description": "JWT + Express base implementation (nodejs backend)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/igor-arkhipenko/jwt-express.git"
+  },
+  "keywords": [],
+  "author": "Igor Arkhipenko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/igor-arkhipenko/jwt-express/issues"
+  },
+  "homepage": "https://github.com/igor-arkhipenko/jwt-express#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
