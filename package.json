@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/igor-arkhipenko/jwt-express#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1"
   }
 }
