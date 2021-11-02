@@ -40,4 +40,4 @@ app.post('/login', (req, res) => {
     } else {
         res.send('Username or password incorrect');
     }
-})
+});
