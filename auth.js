@@ -24,6 +24,8 @@ const users = [
 ];
 
 const accessTokenSecret = 'youraccesstokensecret';
+const refreshTokenSecret = 'yourrefreshtokensecrethere';
+let refreshTokens = [];
 
 app.post('/login', (req, res) => {
     // Read username and password from request body
@@ -34,10 +36,44 @@ app.post('/login', (req, res) => {
 
     if (user) {
         // Generate an access token
-        const accessToken = jwt.sign({ username: user.username, role: user.role }, accessTokenSecret)
+        const accessToken = jwt.sign({ username: user.username, role: user.role }, accessTokenSecret, { expiresIn: '20m' });
+        const refreshToken = jwt.sign({ username: user.username, role: user.role }, refreshTokenSecret);
 
-        res.json({ accessToken })
+        refreshTokens.push(refreshTokens);
+
+        res.json({ accessToken, refreshToken })
     } else {
         res.send('Username or password incorrect');
     }
+});
+
+app.post('/token', (req, res) => {
+    const { token } = req.body;
+
+    if (!token) {
+        return res.sendStatus(401);
+    }
+
+    if (!refreshTokens.includes(token)) {
+        return res.sendStatus(403);
+    }
+
+    jwt.verify(token, refreshTokenSecret, (err, user) => {
+        if (err) {
+            return res.sendStatus(403);
+        }
+
+        const accessToken = jwt.sign({ username: user.username, role: user.role }, accessTokenSecret, { expiresIn: '1m' });
+
+        res.json({
+            accessToken
+        });
+    });
+});
+
+app.post('/logout', (req, res) => {
+    const { token } = req.body;
+    refreshTokens = refreshTokens.filter(t => t !== token);
+
+    res.send("Logout successful");
 });
